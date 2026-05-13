@@ -1,17 +1,10 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import {
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useSpring,
-  useTransform,
-} from "framer-motion";
-import { ArrowRight, GitBranch, Mail, Sparkles, Terminal } from "lucide-react";
+import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
+import { ArrowRight, GitBranch, Mail, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { siteConfig } from "@/lib/site-config";
@@ -19,8 +12,7 @@ import { AnimatedGrid } from "@/components/effects/animated-grid";
 import { FloatingParticles } from "@/components/effects/floating-particles";
 
 const HeroBackdrop3D = dynamic(
-  () =>
-    import("@/components/three/hero-backdrop-3d").then((m) => m.HeroBackdrop3D),
+  () => import("@/components/three/hero-backdrop-3d").then((m) => m.HeroBackdrop3D),
   { ssr: false },
 );
 
@@ -54,8 +46,6 @@ export function HeroSection() {
   const smx = useSpring(mx, { stiffness: 60, damping: 18 });
   const smy = useSpring(my, { stiffness: 60, damping: 18 });
   const spotlight = useMotionTemplate`radial-gradient(650px circle at ${smx}px ${smy}px, rgba(16,185,129,0.22), transparent 55%)`;
-  const rotateX = useTransform(smy, (v) => (v / 900) * 12 - 6);
-  const rotateY = useTransform(smx, (v) => (v / 1100) * 14 - 7);
 
   const typing = useTyping(siteConfig.heroTerminalLines);
   const [pillIndex, setPillIndex] = useState(0);
@@ -75,7 +65,7 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative isolate overflow-hidden border-b border-white/10 pb-24 pt-28 md:pb-32 md:pt-36"
+      className="relative isolate flex min-h-[calc(100dvh-5rem)] flex-col justify-center overflow-hidden border-b border-white/10 py-20 md:min-h-[calc(100dvh-4.5rem)] md:py-24"
       onPointerMove={(e) => {
         const r = e.currentTarget.getBoundingClientRect();
         mx.set(e.clientX - r.left);
@@ -95,18 +85,8 @@ export function HeroSection() {
         <HeroBackdrop3D />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center text-center gap-12 px-6">
-        <div className="flex w-full flex-col items-center space-y-8">
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-emerald-200/90 shadow-[0_0_40px_rgba(16,185,129,0.12)] backdrop-blur-md"
-          >
-            <Sparkles className="h-3.5 w-3.5 text-cyan-300" />
-            Elite systems, cinematic interfaces
-          </motion.div>
-
+      <div className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center justify-center gap-10 px-6 text-center md:gap-12">
+        <div className="flex w-full flex-col items-center space-y-6 md:space-y-8">
           <div className="space-y-4">
             <motion.h1
               className="text-balance font-[family-name:var(--font-space-grotesk)] text-4xl font-semibold tracking-tight text-white md:text-6xl"
@@ -159,7 +139,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.35, duration: 0.65 }}
-              className="max-w-xl text-pretty text-base leading-relaxed text-zinc-300 md:text-lg"
+              className="mx-auto max-w-xl text-pretty text-base leading-relaxed text-zinc-300 md:text-lg"
             >
               {siteConfig.tagline}
             </motion.p>
@@ -169,14 +149,11 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.6 }}
-            className="flex flex-wrap justify-center gap-2"
+            className="flex w-full max-w-lg flex-wrap justify-center gap-2"
           >
             {activePills.map((p, i) => (
               <motion.div key={`${p}-${i}`} layout>
-                <Badge
-                  variant="outline"
-                  className="border-emerald-400/25 bg-emerald-500/10 text-emerald-100"
-                >
+                <Badge variant="outline" className="border-emerald-400/25 bg-emerald-500/10 text-emerald-100">
                   {p}
                 </Badge>
               </motion.div>
@@ -187,30 +164,41 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.55, duration: 0.65 }}
-            className="flex flex-col justify-center gap-3 sm:flex-row sm:items-center"
+            className="flex w-full max-w-2xl flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center"
           >
             <Button
               asChild
               size="lg"
-              className="group relative overflow-hidden border border-emerald-400/30 bg-gradient-to-r from-emerald-500/25 via-cyan-500/20 to-purple-500/25 text-white shadow-[0_0_40px_rgba(16,185,129,0.18)] backdrop-blur-md"
+              className="group relative overflow-hidden border border-emerald-400/30 bg-gradient-to-r from-emerald-500/25 via-cyan-500/20 to-purple-500/25 text-white shadow-[0_0_40px_rgba(16,185,129,0.18)] backdrop-blur-md sm:min-w-[11rem]"
             >
-              <Link href="#projects">
-                View Projects
+              <Link href="#projects" className="inline-flex items-center justify-center">
+                View projects
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-white/15 bg-white/5 backdrop-blur-md">
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="border-white/15 bg-white/5 backdrop-blur-md sm:min-w-[11rem]"
+            >
               <Link
                 href={`https://github.com/${siteConfig.githubUsername}`}
                 target="_blank"
                 rel="noreferrer"
+                className="inline-flex items-center justify-center"
               >
                 <GitBranch className="mr-2 h-4 w-4" />
                 GitHub
               </Link>
             </Button>
-            <Button asChild size="lg" variant="ghost" className="text-zinc-200 hover:text-white">
-              <Link href="#contact">
+            <Button
+              asChild
+              size="lg"
+              variant="ghost"
+              className="text-zinc-200 hover:text-white sm:min-w-[11rem]"
+            >
+              <Link href="#contact" className="inline-flex items-center justify-center">
                 <Mail className="mr-2 h-4 w-4" />
                 Contact
               </Link>
@@ -221,12 +209,12 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.65, duration: 0.65 }}
-            className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 p-4 shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_20px_80px_rgba(0,0,0,0.65)] backdrop-blur-xl"
+            className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10 bg-black/40 p-4 text-left shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_20px_80px_rgba(0,0,0,0.65)] backdrop-blur-xl"
           >
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.06),transparent_40%)]" />
             <div className="pointer-events-none absolute inset-0 opacity-[0.35] [background:repeating-linear-gradient(to_bottom,transparent,transparent_2px,rgba(255,255,255,0.04)_3px)]" />
             <div className="relative flex items-start gap-3 font-mono text-xs text-emerald-100/90 md:text-sm">
-              <Terminal className="mt-0.5 h-4 w-4 text-cyan-300" />
+              <Terminal className="mt-0.5 h-4 w-4 shrink-0 text-cyan-300" />
               <div className="min-h-[4.5rem] w-full">
                 <div className="text-zinc-500">
                   {siteConfig.heroTerminalLines.slice(0, typing.lineIndex).map((l, i) => (

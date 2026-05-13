@@ -35,16 +35,9 @@ export function EasterEggs() {
       }
     };
 
-    const onWow = () => {
-      document.documentElement.classList.add("portfolio-wow");
-      window.setTimeout(() => document.documentElement.classList.remove("portfolio-wow"), 900);
-    };
-
     window.addEventListener("keydown", onKey);
-    window.addEventListener("portfolio:wow", onWow);
     return () => {
       window.removeEventListener("keydown", onKey);
-      window.removeEventListener("portfolio:wow", onWow);
     };
   }, []);
 

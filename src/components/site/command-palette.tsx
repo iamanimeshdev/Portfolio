@@ -11,22 +11,15 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
-import {
-  GitBranch,
-  Layers,
-  Mail,
-  Sparkles,
-  TerminalSquare,
-} from "lucide-react";
+import { GitBranch, Layers, Mail, TerminalSquare } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
 
 const sections = [
   { id: "hero", label: "Hero", hint: "Top" },
   { id: "about", label: "About", hint: "Profile" },
-  { id: "projects", label: "Projects", hint: "Repositories" },
-  { id: "contributions", label: "Contributions", hint: "Snake graph" },
   { id: "stack", label: "Tech stack", hint: "Skills" },
-  { id: "experience", label: "Experience", hint: "Timeline" },
+  { id: "projects", label: "Projects", hint: "Case studies & repos" },
+  { id: "activity-matrix", label: "Activity matrix", hint: "Visualization" },
   { id: "contact", label: "Contact", hint: "Reach out" },
 ];
 
@@ -119,16 +112,6 @@ export function CommandPalette() {
             >
               <TerminalSquare className="mr-2 h-4 w-4" />
               Hero terminal
-            </CommandItem>
-            <CommandItem
-              value="wow mode sparkles"
-              onSelect={() => {
-                window.dispatchEvent(new CustomEvent("portfolio:wow"));
-                setOpen(false);
-              }}
-            >
-              <Sparkles className="mr-2 h-4 w-4 text-purple-300" />
-              Trigger WOW pulse
             </CommandItem>
           </CommandGroup>
         </CommandList>

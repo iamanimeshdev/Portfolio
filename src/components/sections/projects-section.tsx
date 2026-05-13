@@ -4,13 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ExternalLink, GitBranch, Sparkles, Star } from "lucide-react";
+import { ExternalLink, GitBranch, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { siteConfig } from "@/lib/site-config";
 import type { GitHubRepo } from "@/lib/github";
 import { RepoExplorerDialog } from "@/components/sections/repo-explorer-dialog";
+import { ProjectDeepDivesTimeline } from "@/components/sections/featured-projects-section";
 
 type ApiResponse = { username: string; repos: GitHubRepo[]; error?: string };
 
@@ -46,23 +47,53 @@ export function ProjectsSection() {
 
   return (
     <section id="projects" className="relative border-b border-white/10 py-24 md:py-32">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_70%_20%,rgba(168,85,247,0.14),transparent_55%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_80%_15%,rgba(6,182,212,0.1),transparent_50%),radial-gradient(ellipse_at_20%_70%,rgba(168,85,247,0.1),transparent_55%)]" />
       <div className="relative mx-auto max-w-6xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.65 }}
-          className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
+          className="max-w-3xl"
+        >
+          <p className="text-xs font-semibold tracking-[0.35em] text-purple-300/80">PROJECTS</p>
+          <h2 className="mt-3 text-balance font-[family-name:var(--font-space-grotesk)] text-3xl font-semibold tracking-tight text-white md:text-4xl">
+            Case studies and shipped repositories.
+          </h2>
+          <p className="mt-3 text-pretty text-sm leading-relaxed text-zinc-300 md:text-base">
+            Detailed write-ups on architecture and delivery appear first; below that, a live index of GitHub
+            repositories with demos and metadata.
+          </p>
+        </motion.div>
+
+        <div className="mt-14 space-y-4">
+          <motion.p
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5 }}
+            className="text-xs font-semibold tracking-[0.28em] text-emerald-300/85"
+          >
+            DEEP DIVES
+          </motion.p>
+          <ProjectDeepDivesTimeline />
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6 }}
+          className="mt-20 flex flex-col gap-4 border-t border-white/10 pt-16 md:flex-row md:items-end md:justify-between"
         >
           <div className="space-y-3">
-            <p className="text-xs font-semibold tracking-[0.35em] text-purple-300/80">PROJECTS</p>
-            <h2 className="text-balance font-[family-name:var(--font-space-grotesk)] text-3xl font-semibold tracking-tight text-white md:text-4xl">
+            <p className="text-xs font-semibold tracking-[0.28em] text-cyan-300/85">GITHUB INDEX</p>
+            <h3 className="text-balance font-[family-name:var(--font-space-grotesk)] text-2xl font-semibold tracking-tight text-white md:text-3xl">
               Repositories engineered like products.
-            </h2>
+            </h3>
             <p className="max-w-2xl text-pretty text-sm leading-relaxed text-zinc-300 md:text-base">
-              Featured workstreams pulled live from GitHub. Hover to deploy context: demos, stars, and the
-              languages that power each build.
+              Featured workstreams from GitHub. Hover a card for quick actions: live demo, repository, and
+              language context.
             </p>
           </div>
           <div className="flex items-center gap-2 text-xs text-zinc-400">
@@ -109,7 +140,7 @@ export function ProjectsSection() {
             onClick={() => setExplorerOpen(true)}
             className="border border-cyan-400/25 bg-gradient-to-r from-cyan-500/15 via-emerald-500/15 to-purple-500/15 text-white shadow-[0_0_60px_rgba(34,211,238,0.12)] backdrop-blur-md"
           >
-            Explore More Repositories
+            Browse all my projects
           </Button>
         </motion.div>
       </div>
@@ -139,17 +170,9 @@ function ProjectCard({ repo, username }: { repo: GitHubRepo; username: string })
         </div>
       </div>
       <CardContent className="relative space-y-3 p-5">
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <div className="truncate text-lg font-semibold text-white">{repo.name}</div>
-            <p className="mt-1 line-clamp-2 text-sm text-zinc-400">{repo.description ?? "No description provided."}</p>
-          </div>
-          <div className="shrink-0 rounded-full border border-emerald-400/20 bg-emerald-500/10 px-2 py-1 text-xs font-mono text-emerald-100">
-            <span className="inline-flex items-center gap-1">
-              <Star className="h-3.5 w-3.5" />
-              {repo.stargazers_count}
-            </span>
-          </div>
+        <div className="min-w-0">
+          <div className="truncate text-lg font-semibold text-white">{repo.name}</div>
+          <p className="mt-1 line-clamp-2 text-sm text-zinc-400">{repo.description ?? "No description provided."}</p>
         </div>
 
         <div className="flex flex-wrap gap-2">
@@ -165,13 +188,13 @@ function ProjectCard({ repo, username }: { repo: GitHubRepo; username: string })
             <Button asChild size="sm" className="flex-1 bg-emerald-500/15 text-white hover:bg-emerald-500/25">
               <Link href={demo} target="_blank" rel="noreferrer">
                 <ExternalLink className="mr-2 h-4 w-4" />
-                Live Demo
+                Live demo
               </Link>
             </Button>
             <Button asChild size="sm" variant="outline" className="flex-1 border-white/15 bg-white/5">
               <Link href={repo.html_url} target="_blank" rel="noreferrer">
                 <GitBranch className="mr-2 h-4 w-4" />
-                GitHub Repo
+                GitHub repo
               </Link>
             </Button>
           </div>

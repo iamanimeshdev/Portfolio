@@ -10,9 +10,8 @@ import { siteConfig } from "@/lib/site-config";
 const links = [
   { href: "#about", label: "About" },
   { href: "#projects", label: "Projects" },
-  { href: "#contributions", label: "Graph" },
+  { href: "#activity-matrix", label: "Activity" },
   { href: "#stack", label: "Stack" },
-  { href: "#experience", label: "Experience" },
   { href: "#contact", label: "Contact" },
 ] as const;
 

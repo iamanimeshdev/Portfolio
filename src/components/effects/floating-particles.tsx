@@ -16,7 +16,9 @@ export function FloatingParticles({ count = 48 }: { count?: number }) {
   );
 
   useEffect(() => {
-    setMounted(true);
+    queueMicrotask(() => {
+      setMounted(true);
+    });
   }, []);
 
   if (!mounted) return null;

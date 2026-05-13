@@ -7,7 +7,9 @@ export function CursorGlow() {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    setEnabled(window.matchMedia("(pointer: fine)").matches);
+    queueMicrotask(() => {
+      setEnabled(window.matchMedia("(pointer: fine)").matches);
+    });
   }, []);
 
   const outerRef = useRef<HTMLDivElement>(null);

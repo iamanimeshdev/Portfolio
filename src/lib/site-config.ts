@@ -26,21 +26,17 @@ export const siteConfig = {
     "iamanimeshdev",
 
   featuredRepoNames: [
-    "Prisma",
-    "Transcripter.ai",
     "OrionAI",
     "HRflow",
+    "Prisma",
   ],
 
   repoDemoUrls: {
-    Prisma: "https://github.com/iamanimeshdev/Prisma",
-
-    "Transcripter.ai":
-      "https://github.com/iamanimeshdev/Transcripter.ai",
-
     OrionAI: "https://orion-ai-woad.vercel.app/",
 
     HRflow: "https://h-rflow.vercel.app/",
+
+    Prisma: "https://www.youtube.com/watch?v=owaFW7JMnxk",
   },
 
   stats: {

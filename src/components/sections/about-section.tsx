@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { siteConfig } from "@/lib/site-config";
 import { Card, CardContent } from "@/components/ui/card";
