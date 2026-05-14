@@ -229,7 +229,7 @@ export function ContactSection() {
         return;
       }
 
-      if (res.status === 503 && data.code === "MAIL_NOT_CONFIGURED") {
+      if (res.status === 503 && data.code === "CONTACT_NOT_CONFIGURED") {
         const subject = encodeURIComponent(`Inquiry from ${name}`);
         const body = encodeURIComponent(`From: ${name} <${email}>\n\n${message}`);
         window.location.href = `mailto:${siteConfig.email}?subject=${subject}&body=${body}`;
